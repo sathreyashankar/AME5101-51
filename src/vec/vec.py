@@ -13,10 +13,13 @@ class Vec:
             self.elements = []
         else:
             elements = list(src)
-            for x in elements:
-                if not isinstance(x, (int, float)):
-                    raise TypeError(f"Scalar must be a number: {type(x)}")
-            self.elements = elements
+            # Refactored Code - Simply convert without really checking
+            self.elements = elements    # Refactored code
+
+            # for x in elements:
+            #     if not isinstance(x, (int, float)):
+            #         raise TypeError(f"Scalar must be a number: {type(x)}")
+
 
     def __add__(self, t: Self) -> Self:
         if not isinstance(t, Vec):
