@@ -20,68 +20,89 @@ class Vec:
             #     if not isinstance(x, (int, float)):
             #         raise TypeError(f"Scalar must be a number: {type(x)}")
 
-
-    def __add__(self, t: Self) -> Self:
-        if not isinstance(t, Vec):
-            raise TypeError(f"Expected Vec: {type(t)}")
-        if len(self.elements) != len(t):
-            raise TypeError(f"Type error - vectors must be of same dimensions")
-
-        return Vec([round(x + y, 5) for x, y in zip(self.elements, t.elements)])
+    def scalar_multiply_list(self, alpha):
+        elements = list(self.elements)
+        for i in range(len(elements)):
+            elements[i] = alpha*elements[i]
+        result = Vec(elements)
+        return result
 
 
-    def __rmul__(self, scalar: int | float) -> Self:
-        if not isinstance(scalar, (int, float)):
-            raise TypeError(f"Vector multiplication with invalid type: {type(scalar)}")
-        #
-        return Vec([round(x * scalar, 5) for x in self.elements])
+    def scalar_multiply(self, alpha):
+        return Vec((x*alpha for x in self.elements))
+        
 
-    def __imul__(self, scalar: int | float) -> Self:
-        if not isinstance(scalar, (int, float)):
-            raise TypeError(f"Vector multiplication with invalid type: {type(scalar)}")
+if __name__ == "__main__":
+    v1 = Vec((1, 2, 3))
+    v2 = v1.scalar_multiply_list(3)
+    print(v2)
+    print(v2.elements)
+    v3 = v1.scalar_multiply(5)
+    print(v3)
+    print(v3.elements)
 
-        for i, val in enumerate(self.elements):
-            self.elements[i] = round(val * scalar, 5)
-        #
-        return self
 
-    def __repr__(self) -> str:
-        return repr(self.elements)
+    # def __add__(self, t: Self) -> Self:
+    #     if not isinstance(t, Vec):
+    #         raise TypeError(f"Expected Vec: {type(t)}")
+    #     if len(self.elements) != len(t):
+    #         raise TypeError(f"Type error - vectors must be of same dimensions")
 
-    def __len__(self) -> int:
-        return len(self.elements)
+    #     return Vec([round(x + y, 5) for x, y in zip(self.elements, t.elements)])
 
-    def __sub__(self, t: Self) -> Self:
-        raise RuntimeError("vec subtraction unimplemented")
 
-    def __neg__(self) -> Self:
-        raise RuntimeError("vec negation unimplemented")
+    # def __rmul__(self, scalar: int | float) -> Self:
+    #     if not isinstance(scalar, (int, float)):
+    #         raise TypeError(f"Vector multiplication with invalid type: {type(scalar)}")
+    #     #
+    #     return Vec([round(x * scalar, 5) for x in self.elements])
 
-    def __radd__(self, other):
-        raise RuntimeError("vec _radd_ unimplemented")
+    # def __imul__(self, scalar: int | float) -> Self:
+    #     if not isinstance(scalar, (int, float)):
+    #         raise TypeError(f"Vector multiplication with invalid type: {type(scalar)}")
 
-    def __iadd__(self, other):
-        raise RuntimeError("vec _iadd_ unimplemented")
+    #     for i, val in enumerate(self.elements):
+    #         self.elements[i] = round(val * scalar, 5)
+    #     #
+    #     return self
 
-    # return a vector of @n zeroes. precondition: @n > 0
-    @staticmethod
-    def zeros(n: int) -> Self:
-        raise RuntimeError("zeros unimpleented")
+    # def __repr__(self) -> str:
+    #     return repr(self.elements)
 
-    # return a vector of @n. precondition: @n > 0
-    @staticmethod
-    def ones(n: int) -> Self:
-        raise RuntimeError("ones unimpleented")
+    # def __len__(self) -> int:
+    #     return len(self.elements)
 
-    # return a vector of @n uniformly distributed numbers in [0, 1]. precondition: @n > 0
-    @staticmethod
-    def uniform(n: int) -> Self:
-        raise RuntimeError("random unimpleented")
+    # def __sub__(self, t: Self) -> Self:
+    #     raise RuntimeError("vec subtraction unimplemented")
 
-    # Calculates the Euclidean norm (L2 norm) of the vector.
-    # sqrt(e[0]^2 + e[1]^2 + e[2]^2 + ... + e[n-1]^2)
-    def norm(self) -> float:
-        raise RuntimeError("norm unimpleented")
+    # def __neg__(self) -> Self:
+    #     raise RuntimeError("vec negation unimplemented")
+
+    # def __radd__(self, other):
+    #     raise RuntimeError("vec _radd_ unimplemented")
+
+    # def __iadd__(self, other):
+    #     raise RuntimeError("vec _iadd_ unimplemented")
+
+    # # return a vector of @n zeroes. precondition: @n > 0
+    # @staticmethod
+    # def zeros(n: int) -> Self:
+    #     raise RuntimeError("zeros unimpleented")
+
+    # # return a vector of @n. precondition: @n > 0
+    # @staticmethod
+    # def ones(n: int) -> Self:
+    #     raise RuntimeError("ones unimpleented")
+
+    # # return a vector of @n uniformly distributed numbers in [0, 1]. precondition: @n > 0
+    # @staticmethod
+    # def uniform(n: int) -> Self:
+    #     raise RuntimeError("random unimpleented")
+
+    # # Calculates the Euclidean norm (L2 norm) of the vector.
+    # # sqrt(e[0]^2 + e[1]^2 + e[2]^2 + ... + e[n-1]^2)
+    # def norm(self) -> float:
+    #     raise RuntimeError("norm unimpleented")
 
 
 """
@@ -103,14 +124,14 @@ class Vec:
 if sys.version_info < (3, 8):
     sys.exit("Error: This script requires Python 3.8 or higher.")
 
-if __name__ == "__main__":
-    #z1 = Vec.zeros(10)
-    v1 = Vec([0, 1, 1.03])
-    print(v1)
-    v3 = 2.2 * v1
-    v3 *= 5
-    # v3 = 1 + v3
-    print(v3)
-    v2 = v1 + v3
-    print(v1 + v3)
-    #print(-(v1 + v3))
+# if __name__ == "__main__":
+#     #z1 = Vec.zeros(10)
+#     v1 = Vec([0, 1, 1.03])
+#     print(v1)
+#     v3 = 2.2 * v1
+#     v3 *= 5
+#     # v3 = 1 + v3
+#     print(v3)
+#     v2 = v1 + v3
+#     print(v1 + v3)
+#     #print(-(v1 + v3))
